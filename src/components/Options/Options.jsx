@@ -1,30 +1,28 @@
-import React from 'react';
-import css from './Options.module.css';
 
-const Options = ({ buttons, updateFeedback, totalFeedback, resetFeedback }) => {
-  const handleFeedbackClick = (item) => {
-    updateFeedback(item);
-  };
 
+import styles from "./Options.module.css";
+
+const Options = ({ updateFeedback, totalFeedback, onReset }) => {
   return (
-    <>
-      <ul className={css.list}>
-        {buttons.map(item => {
-          return (
-            <li key={item}>
-              <button className={css.button} onClick={() => handleFeedbackClick(item)}>
-                {item}
-              </button>
-            </li>
-          );
-        })}
-        {totalFeedback > 0 && (
-          <button className={css.button} onClick={resetFeedback}>
-            Reset
-          </button>
-        )}
-      </ul>
-    </>
+    <div className={styles.button_container}>
+      <button className={styles.button} onClick={() => updateFeedback("good")}>
+        Good
+      </button>
+      <button
+        className={styles.button}
+        onClick={() => updateFeedback("neutral")}
+      >
+        Neutral
+      </button>
+      <button className={styles.button} onClick={() => updateFeedback("bad")}>
+        Bad
+      </button>
+      {totalFeedback > 0 && (
+        <button className={styles.button} onClick={() => onReset()}>
+          Reset
+        </button>
+      )}
+    </div>
   );
 };
 

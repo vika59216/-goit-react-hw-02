@@ -1,7 +1,10 @@
-.notify {
-    font-size: 18px;
-    color: #fff;
-    background-color: #333;
-    padding: 10px 20px;
-    border-radius: 5px;
+
+
+
+.message {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 20px;
+    color: black;
 }

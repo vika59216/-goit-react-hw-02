@@ -1,13 +1,25 @@
-import React from 'react'
-import css from './Description.module.css'
 
-const Description = ({title,text}) => {
+
+
+
+
+
+
+
+
+import styles from "./Description.module.css";
+
+const Description = () => {
   return (
-    <>
-    <h1 className={css.title}>{title}</h1>
-    <p className={css.text}>{text}</p>
-    </>
-  )
-}
+    <div className={styles.container_description}>
+      <h1 className={styles.name}>Sip Happens Café</h1>
 
-export default Description
+      <p className={styles.description}>
+        Please leave your feedback about our service by selecting one of the
+        options below.
+      </p>
+    </div>
+  );
+};
+
+export default Description;
