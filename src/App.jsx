@@ -1,65 +1,65 @@
+import { useEffect, useState } from 'react';
+import css from './App.module.css';
 
-import { useState } from 'react';
-import {useEffect} from 'react';
-import CafeReviews from './components/CafeReviews/CafeReviews'
-import CafeValues from './components/CafeReviews/CafeValues/CafeValues'
-import Description from './components/CafeReviews/Description/Description'
-import Notification from './components/CafeReviews/Notification/Notification'
+import Description from './components/Description/Description';
+import Options from './components/Options/Options';
+import Feedback from './components/Feedback/Feedback';
+import Notification from './components/Notification/Notification';
 
-
-const initialCafes = {good:0, neutral:0, bad:0}
 function App() {
-  const [cafes, setCafes] = useState(() => {
-    const stringifiedCafes = localStorage.getItem("cafevalues");
-    const parsedCafes = JSON.parse(stringifiedCafes) ?? initialCafes;
-    return parsedCafes;
+  const feedbackInit = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+  const [feedback, setFeedback] = useState(() => {
+    const feedbackLocalStorage = window.localStorage.getItem('feedback-status');
+
+    if (feedbackLocalStorage !== null) {
+      return JSON.parse(feedbackLocalStorage);
+    }
+
+    return feedbackInit;
   });
-  const [isVisibleBar, setIsVisibleBar] = useState(false);
-
-
-  const handleLogCafe = (cafeName) => {
-    console.log("cafeName:", cafeName);
-    setCafes({ ...cafes, [cafeName]: cafes[cafeName] + 1 });
-  }
-
-
-  const handleResetCafes = () => {
-    setCafes(initialCafes);
-  }
- 
-
-  const totalFeedback = cafes.good + cafes.neutral + cafes.bad;
-  const positiveFeedback = Math.round((cafes.good / totalFeedback) * 100)
-  const onToggleMiniBarVisibility = () => {
-    setIsVisibleBar(isVisibleBar);
-  }
   useEffect(() => {
-    localStorage.setItem("CafeValues", JSON.stringify(cafes));
-  }, [cafes]);
+    window.localStorage.setItem('feedback-status', JSON.stringify(feedback));
+  }, [feedback]);
 
+  const buttons = ['good', 'neutral', 'bad'];
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+  const positiveFeedback = Math.round(((feedback.good + feedback.neutral) / totalFeedback) * 100);
 
-  
+  function updateFeedback(type) {
+    setFeedback({ ...feedback, [type]: feedback[type] + 1 });
+  }
+
+  function resetFeedback() {
+    setFeedback(feedbackInit);
+  }
+
   return (
-    <>
-      <div>
-        <Description
+    <div className={css.container}>
+      <Description
         title="Sip Happens Café"
         text="Please leave your feedback about our service by selecting one of the options below."
       ></Description>
-        <CafeReviews
+      <Options
+        updateFeedback={updateFeedback}
+        buttons={buttons}
+        totalFeedback={totalFeedback}
+        resetFeedback={resetFeedback}
+      ></Options>
+      {totalFeedback > 0 ? (
+        <Feedback
+          feedback={feedback}
+          totalFeedback={totalFeedback}
           positiveFeedback={positiveFeedback}
-        total={totalFeedback}
-          handleResetCafes={handleResetCafes}
-          onToggleMiniBarVisibility={onToggleMiniBarVisibility}
-          handleLogCafe={handleLogCafe} /> 
-        <CafeValues cafes={cafes} total={totalFeedback}
-          
-        />
+        ></Feedback>
+      ) : (
         <Notification notificationText="Not feedback yet"></Notification>
-      </div>
-      
-    </>
-  )
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;

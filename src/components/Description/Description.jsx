@@ -1,4 +1,4 @@
-
+import React from 'react'
 import css from './Description.module.css'
 
 const Description = ({title,text}) => {
