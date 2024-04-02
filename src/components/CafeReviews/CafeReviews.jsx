@@ -21,6 +21,8 @@ import { useEffect } from "react";
           <button onClick={() => handleLogCafe("bad")}>Bad</button>
           {total !== 0 && <button onClick={handleResetCafes}>Reset</button>}
          
+          
+          
     </div>
         )
         }
