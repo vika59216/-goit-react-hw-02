@@ -3,8 +3,8 @@ import { useState } from 'react';
 import {useEffect} from 'react';
 import CafeReviews from './components/CafeReviews/CafeReviews'
 import CafeValues from './components/CafeReviews/CafeValues/CafeValues'
-import Description from '../Description/Description';
-import Notification from '../Notification/Notification';
+import Description from './components/CafeReviews/Description/Description'
+import Notification from './components/CafeReviews/Notification/Notification'
 
 
 const initialCafes = {good:0, neutral:0, bad:0}
